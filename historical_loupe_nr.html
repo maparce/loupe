@@ -253,106 +253,106 @@
     }
   
 
-    // ///##########################################
-    // var daRadioButton = document.getElementById("daRadio");
-    // // var daDiv = map1937.getPane("tilePane").children[1]
+    ///##########################################
+    var daRadioButton = document.getElementById("daRadio");
+    // var daDiv = map1937.getPane("tilePane").children[1]
     // daRadioButton.addEventListener("mousedown",slideReadyRad)
     // window.addEventListener("mouseup", slideFinishRad);
     // daRadioButton.addEventListener("touchstart", slideReadyRad);
     // window.addEventListener("touchstop", slideFinishRad);
-    // var xCirculo =  parseInt(document.getElementById("daC").getAttribute("cx"))
-    // var yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+    var xCirculo =  parseInt(document.getElementById("daC").getAttribute("cx"))
+    var yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
 
-    // var clickedRad = 0; // this will be used to mark if the mouse has been clicked
-    // //var movemap = 1;
-    // var xE = 0;
-    // var xI =  0;
-    // var xD = 0;
-    // var dRadio = 0;
-    // /// the idea on how to interact with the div came in part from code from W3 school slider
-    // function slideReadyRad(e) {
+    var clickedRad = 0; // this will be used to mark if the mouse has been clicked
+    //var movemap = 1;
+    var xE = 0;
+    var xI =  0;
+    var xD = 0;
+    var dRadio = 0;
+    /// the idea on how to interact with the div came in part from code from W3 school slider
+    function slideReadyRad(e) {
      
-    //   e.preventDefault(); /* w3 had this version, but not sure I need this Prevent any other actions that may occur when moving over the image: */
-    //   clickedRad = 1; // mouse is clicked. 
-    //   e = e || window.event;
-    //   //console.log(e.clientX)
-    //   map1937.dragging.disable() 
-    //   // xCenter = parseInt(document.getElementById("daRadio").getAttribute("cx")) 
-    //   xI =  e.clientX - xCirculo;
+      e.preventDefault(); /* w3 had this version, but not sure I need this Prevent any other actions that may occur when moving over the image: */
+      clickedRad = 1; // mouse is clicked. 
+      e = e || window.event;
+      //console.log(e.clientX)
+      map1937.dragging.disable() 
+      // xCenter = parseInt(document.getElementById("daRadio").getAttribute("cx")) 
+      xI =  e.clientX - xCirculo;
 
-    //   /* Execute a function when the slider is moved: */
-    //   window.addEventListener("mousemove", slideMoveRad);
-    //   window.addEventListener("touchmove", slideMoveRad);
-    // }
-    // function slideFinishRad() {
-    //   clickedRad = 0; // indicate that the mouse has been unclicked 
-    //   // xRadio = parseInt(document.getElementById("daRadio").getAttribute("cx"))  
-    //   map1937.dragging.enable() // allow for dragging to continue
-    // }
-    // function slideMoveRad(e) {
-    //   if (clickedRad == 0) return false; // if the mouse not being used, stop.
-    //   xE = getCursorPosRad(e)  // Get the xy location of the cursor
-    //   // console.log(xE)
-    //   slideRad(xE);
-    // }
-    // function getCursorPosRad(e) {
-    //   e = e || window.event;
-    //   // console.log(e)
-    //   xyE.x = e.clientX 
-    //   xyE.y = e.clientY
-    //   return xyE;
-    //   // original version only cared for the X 
-    //   // xE = e.clientX - xCirculo;
-    //   // return xE;
-    // }
-    // function slideRad(xyE) { //orginal got xE
-    //   rRadio = parseInt(document.getElementById("daC").getAttribute("r"))
-    //   xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
-    //   yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+      /* Execute a function when the slider is moved: */
+      window.addEventListener("mousemove", slideMoveRad);
+      window.addEventListener("touchmove", slideMoveRad);
+    }
+    function slideFinishRad() {
+      clickedRad = 0; // indicate that the mouse has been unclicked 
+      // xRadio = parseInt(document.getElementById("daRadio").getAttribute("cx"))  
+      map1937.dragging.enable() // allow for dragging to continue
+    }
+    function slideMoveRad(e) {
+      if (clickedRad == 0) return false; // if the mouse not being used, stop.
+      xE = getCursorPosRad(e)  // Get the xy location of the cursor
+      // console.log(xE)
+      slideRad(xE);
+    }
+    function getCursorPosRad(e) {
+      e = e || window.event;
+      // console.log(e)
+      xyE.x = e.clientX 
+      xyE.y = e.clientY
+      return xyE;
+      // original version only cared for the X 
+      // xE = e.clientX - xCirculo;
+      // return xE;
+    }
+    function slideRad(xyE) { //orginal got xE
+      rRadio = parseInt(document.getElementById("daC").getAttribute("r"))
+      xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+      yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
 
-    //   xD = Math.sqrt( Math.pow(Math.abs(xyE.x - xCirculo),2) + Math.pow(Math.abs(xyE.y - yCirculo),2))
+      xD = Math.sqrt( Math.pow(Math.abs(xyE.x - xCirculo),2) + Math.pow(Math.abs(xyE.y - yCirculo),2))
 
-    //   // xD = (xE - xI)
-    //   // dRadio = xD + rRadio;
-    //   // console.log(xD)
-    //   // console.log(rRadio)
-    //   // if(dRadio < xCenter && dRadio > 30 && clicked==0){
-    //   //   // console.log(xD)
-    //   //  // xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))  
-    //   if (xD > 0 ){
-    //   rRadio = xD;
-    //   // xRadio =  xCirculo + rRadio - 3;
-    //   //   //console.log(rRadio)
-    //   //   // var xText = xD  - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
+      // xD = (xE - xI)
+      // dRadio = xD + rRadio;
+      // console.log(xD)
+      // console.log(rRadio)
+      // if(dRadio < xCenter && dRadio > 30 && clicked==0){
+      //   // console.log(xD)
+      //  // xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))  
+      if (xD > 0 ){
+      rRadio = xD;
+      // xRadio =  xCirculo + rRadio - 3;
+      //   //console.log(rRadio)
+      //   // var xText = xD  - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
        
         
         
         
-    //     document.getElementById("daC").setAttributeNS(null,'r',rRadio) 
-    //     document.getElementById("daRing").setAttributeNS(null, 'r', rRadio);
+        document.getElementById("daC").setAttributeNS(null,'r',rRadio) 
+        document.getElementById("daRing").setAttributeNS(null, 'r', rRadio);
         
-    //     xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
-    //     yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
-    //     xRadio = xCirculo + rRadio - 3
-    //     var yText = yCirculo - rRadio - 10;
-    //     //console.log(yText)
-    //     document.getElementById("daRadio").setAttributeNS(null, 'r', rRadio)
-    //     // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
-    //     document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
+        xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+        yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+        xRadio = xCirculo + rRadio - 3
+        var yText = yCirculo - rRadio - 10;
+        //console.log(yText)
+        document.getElementById("daRadio").setAttributeNS(null, 'r', rRadio)
+        // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
+        document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
        
 
-    //     //annoying safari method
-    //     document.getElementById("container").append(document.getElementById('map1937'))
+        //annoying safari method
+        document.getElementById("container").append(document.getElementById('map1937'))
 
-    //     } 
+        } 
 
-    //     // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
+        // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
 
-    //     // cuando llega al limite se prende una variable elLimite = 1 
-    //     // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
+        // cuando llega al limite se prende una variable elLimite = 1 
+        // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
 
-    //   //console.log(xyD)   
-    // }
+      //console.log(xyD)   
+    }
 
 
 
