@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my first leaflet map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <script src ="./js/L.Map.Sync.js"></script>
+   
+   <style>
+        div{
+        color: #fff;
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        
+        /* padding: 5px; */
+        }
+
+        #container {
+          width: 500px;
+          height: 500px;
+          position: absolute;
+          background-color:#000;
+          
+        }
+        #map1937,
+        #map2009,
+        #mapBlank {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 11;
+        }
+        #map2009 {
+          z-index: 10;
+        }
+
+        #mapBlank {
+          z-index: 13;
+          background-color: white;
+          opacity: .50;
+        }
+
+        .clip-circle {
+          clip-path: url(#maskhair);       
+          -webkit-clip-path: url(#maskhair);  
+          cursor: move;
+          }
+
+          /* #daSVG{
+              display: block;
+              float: left;
+              z-index: 999;
+            } */
+    </style>
+</head>
+
+<body>
+
+  <!-- <svg id="daSVGTest" viewBox="0 0 200 200" width="500" height="500" style="pointer-events: stroke">
+    <circle cx="100" onclick="alert('hola')" cy="100" r="50" style="stroke:#000; fill-opacity:0.05">
+  </svg> -->
+
+  <svg viewBox="0 0 0 0" width="1" height="1">
+    <defs>
+      <clipPath id="maskhair">
+        <circle id= "daC" cx="100" cy="100" r="100" style="cursor: move"/>
+        <!-- <circle id="daRadioC" cx="347" cy="250" r="10"/> -->
+        <text id="daTextC" x="230" y="140" style="fill:#fff; stroke:rgb(136, 57, 43); stroke-width:2; font-size: 20px;">1937</text> 
+      </clipPath>
+    </defs>
+  </svg>
+
+
+  
+    <div id="container">    
+    <div id="map1937" class="clip-circle"></div>
+    <div id="map2009"></div>
+    <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
+    <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" >
+      <circle id="daRing" cx="250" cy="250" r="100" style="stroke:#000; fill-opacity:0; stroke-opacity:0.5;stroke-width:2%; cursor: move;"/>
+      <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0;stroke-width:2.5%;"/>
+      <!-- <text x="341" y="255" stroke="#ff0"> 37</text> -->
+      </svg>
+    <!-- <div id="mapBlank"> -->
+    <!-- <div id="test" class="img-comp-slider"> -->
+      <!-- <svg id="daSVG" viewBox="0 0 200 200" width="100" height="100">
+        <circle cx="250" cy="250" r="74" style="fill:#000"/>
+      </svg> -->
+    <!-- </div> -->
+    </div>
+    
+<a>r</a>
+<input id="daR" type="range" min="0" max="200" value="100" oninput="moveSlider(this, 'r')"/>
+<a>x</a>
+<input id="daX" type="range" min="0" max="200" value="100" oninput="moveSlider(this, 'x')"/>
+<a>y</a>
+<input id="daY" type="range" min="0" max="200" value="100" oninput="moveSlider(this, 'y')"/>
+<script>
+        var daZoom = 17;
+        var daCenter = [18.144475406614973, -65.30060941442248,];
+        var map1937 = L.map('map1937', { zoomControl: false , attributionControl: false,}).setView(daCenter, daZoom);
+        var map2009 = L.map('map2009', { zoomControl: false, attributionControl: false, }).setView(daCenter, daZoom);
+        L.tileLayer('https://cartocollective.blob.core.windows.net/vieques/v2009/{z}/{x}/{y}.png', {} ).addTo(map2009)
+        // var mapBlank = L.map('mapBlank', { zoomControl: false, attributionControl: false, }).setView(daCenter, daZoom);
+        L.tileLayer('https://cartocollective.blob.core.windows.net/vieques/v1937/{z}/{x}/{y}.png', {} ).addTo(map1937);
+        // map1937.getPane("tilePane").children[1].setAttributeNS(null, "id" ,"clip-circle")
+        // map1937.sync(mapBlank)
+        map1937.sync(map2009)
+        map2009.sync(map1937)
+        // map2009.sync(mapBlank)
+        // mapBlank.sync(map1937)
+        // mapBlank.sync(map2009)
+        // map1937.getPanes().overlayPane.appendChild(document.getElementById("daSVG"))
+        // document.getElementById("map1937").childNodes[1].appendChild(document.getElementById("daSVG"))
+        document.getElementsByClassName("leaflet-control-container")[0].append(document.getElementById("daSVG"))
+        document.getElementById("daSVG").style.zIndex = 999
+        const daWidth = document.getElementById('map1937').getBoundingClientRect().width
+        const daHeight = document.getElementById('map1937').getBoundingClientRect().height
+        const xCenter = daWidth/2
+        const yCenter = daHeight/2
+        var rRadio = parseInt(document.getElementById("daC").getAttribute("r"))
+        var xRadio = xCenter + rRadio - 3
+        var xText = xCenter - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
+        var yText = yCenter - rRadio - 10;
+      // MAKE THE DISK SVG HAVE THE WIDTH AND HEIGHT OF THE BOUNDING CLIENT 
+      document.getElementById("daSVG").setAttributeNS(null, "viewBox", "0 0 " + daWidth + " " + daHeight);
+      document.getElementById("daRing").setAttributeNS(null, 'cx', xCenter);
+      document.getElementById("daRing").setAttributeNS(null, 'cy', yCenter);
+      document.getElementById("daRadio").setAttributeNS(null, 'cx', xCenter);
+      document.getElementById("daRadio").setAttributeNS(null, 'cy', yCenter);
+      // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xCenter);
+      // document.getElementById("daRadioC").setAttributeNS(null, 'cy', yCenter);
+      
+      document.getElementById("daTextC").setAttributeNS(null, 'x', xText);
+      document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
+      document.getElementById("daC").setAttributeNS(null, 'cx', xCenter);
+      document.getElementById("daC").setAttributeNS(null, 'cy', yCenter);
+      document.getElementById("daX").setAttribute("value",xCenter)     
+      document.getElementById("daY").setAttribute("value",yCenter) 
+      document.getElementById("daX").setAttribute("max",xCenter*2)     
+      document.getElementById("daY").setAttribute("max",yCenter*2)  
+
+    var moveSlider = function(slider, direction) {
+            var value = slider.value;
+            //console.log(value)
+            // var circle = document.getElementById("target");
+            if (direction == 'r') { 
+                         document.getElementById("daC").setAttributeNS(null,'r',value);
+                          }
+            else {
+              var coord = "c" + direction;
+              document.getElementById("daC").setAttributeNS(null, coord, value);
+            }
+            document.getElementById("container").append(document.getElementById('map1937'))
+            //this is a very annoying way that I have to come up with to solve the fact that it did not work properly in Safari. 
+            //Is appending the map1937 div in the container to cause a refresh
+           };
+    
+    var daFrame = { // this will have the limits on how far the circle can go 
+      n: parseInt(document.getElementById("daC").getAttribute("r")),
+      e: document.getElementById('map1937').getBoundingClientRect().width - parseInt(document.getElementById("daC").getAttribute("r")),
+      s: document.getElementById('map1937').getBoundingClientRect().height - parseInt(document.getElementById("daC").getAttribute("r")),
+      w: parseInt(document.getElementById("daC").getAttribute("r"))
+    } 
+
+    var daDiv = document.getElementById("daRing");
+    // var daDiv = map1937.getPane("tilePane").children[1]
+    daDiv.addEventListener("mousedown",slideReady)
+    window.addEventListener("mouseup", slideFinish);
+    daDiv.addEventListener("touchstart", slideReady);
+    window.addEventListener("touchstop", slideFinish);
+    
+    var clicked = 0; // this will be used to mark if the mouse has been clicked
+    var movemap = 1;
+    var xyE = {x:0, y:0};
+    var xyI =  {x:0, y:0}
+    var circLoc =  {x:parseInt(document.getElementById("daC").getAttribute("cx")), y:parseInt(document.getElementById("daC").getAttribute("cy"))}
+    var xyD = {x:0, y:0};
+    /// the idea on how to interact with the div came in part from code from W3 school slider
+    function slideReady(e) {
+     
+      e.preventDefault(); /* w3 had this version, but not sure I need this Prevent any other actions that may occur when moving over the image: */
+      clicked = 1; // mouse is clicked. 
+      e = e || window.event;
+      map1937.dragging.disable() 
+      xyI =  {x:e.clientX, y:e.clientY}
+
+      /* Execute a function when the slider is moved: */
+      window.addEventListener("mousemove", slideMove);
+      window.addEventListener("touchmove", slideMove);
+    }
+    function slideFinish() {
+      clicked = 0; // indicate that the mouse has been unclicked 
+      circLoc =  {x:parseInt(document.getElementById("daC").getAttribute("cx")), y:parseInt(document.getElementById("daC").getAttribute("cy"))} // assign the last location after unclicked to the circle to circLoc
+      map1937.dragging.enable() // allow for dragging to continue
+    }
+    function slideMove(e) {
+      if (clicked == 0) return false; // if the mouse not being used, stop.
+      xyE = getCursorPos(e) // Get the xy location of the cursor
+      slide(xyE);
+    }
+    function getCursorPos(e) {
+      e = e || window.event;
+      xyE.x = e.clientX 
+      xyE.y = e.clientY
+      return xyE;
+    }
+    function slide(xyE) {
+      xyD = {x: ((xyE.x - xyI.x) + circLoc.x) , y: ((xyE.y-xyI.y) + circLoc.y)}
+      
+      if(xyD.x < daFrame.e && xyD.y < daFrame.s && xyD.x > daFrame.w && xyD.y > daFrame.n & clickedRad==0){
+        document.getElementById("daC").setAttributeNS(null,'cx',xyD.x)
+        document.getElementById("daC").setAttributeNS(null,'cy',xyD.y) 
+        document.getElementById("daRing").setAttributeNS(null, 'cx', xyD.x);
+        document.getElementById("daRing").setAttributeNS(null, 'cy', xyD.y);
+        var xRadio = xyD.x + rRadio - 3
+        var xText = xyD.x  - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
+        var yText = xyD.y - rRadio - 10;
+
+        document.getElementById("daRadio").setAttributeNS(null, 'cx', xyD.x);
+        document.getElementById("daRadio").setAttributeNS(null, 'cy', xyD.y);
+        
+        // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
+        // document.getElementById("daRadioC").setAttributeNS(null, 'cy', xyD.y);
+        document.getElementById("daTextC").setAttributeNS(null, 'x', xText);
+        document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
+
+        //annoying safari method
+        document.getElementById("container").append(document.getElementById('map1937'))
+
+        } 
+
+        // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
+
+        else if (xyD.x > daFrame.e) {map1937.panBy([10, 0])} 
+        else if (xyD.x < daFrame.w) {map1937.panBy([-10, 0])}
+        else if (xyD.y > daFrame.s) {map1937.panBy([0, 10])}
+        else if (xyD.y < daFrame.n) {map1937.panBy([0, -10])}
+
+        // cuando llega al limite se prende una variable elLimite = 1 
+        // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
+
+      //console.log(xyD)   
+    }
+  
+
+    ///##########################################
+    var daRadioButton = document.getElementById("daRadio");
+    // var daDiv = map1937.getPane("tilePane").children[1]
+    daRadioButton.addEventListener("mousedown",slideReadyRad)
+    window.addEventListener("mouseup", slideFinishRad);
+    daRadioButton.addEventListener("touchstart", slideReadyRad);
+    window.addEventListener("touchstop", slideFinishRad);
+    var xCirculo =  parseInt(document.getElementById("daC").getAttribute("cx"))
+    var yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+
+    var clickedRad = 0; // this will be used to mark if the mouse has been clicked
+    //var movemap = 1;
+    var xE = 0;
+    var xI =  0;
+    var xD = 0;
+    var dRadio = 0;
+    /// the idea on how to interact with the div came in part from code from W3 school slider
+    function slideReadyRad(e) {
+     
+      e.preventDefault(); /* w3 had this version, but not sure I need this Prevent any other actions that may occur when moving over the image: */
+      clickedRad = 1; // mouse is clicked. 
+      e = e || window.event;
+      //console.log(e.clientX)
+      map1937.dragging.disable() 
+      // xCenter = parseInt(document.getElementById("daRadio").getAttribute("cx")) 
+      xI =  e.clientX - xCirculo;
+
+      /* Execute a function when the slider is moved: */
+      window.addEventListener("mousemove", slideMoveRad);
+      window.addEventListener("touchmove", slideMoveRad);
+    }
+    function slideFinishRad() {
+      clickedRad = 0; // indicate that the mouse has been unclicked 
+      // xRadio = parseInt(document.getElementById("daRadio").getAttribute("cx"))  
+      map1937.dragging.enable() // allow for dragging to continue
+    }
+    function slideMoveRad(e) {
+      if (clickedRad == 0) return false; // if the mouse not being used, stop.
+      xE = getCursorPosRad(e)  // Get the xy location of the cursor
+      // console.log(xE)
+      slideRad(xE);
+    }
+    function getCursorPosRad(e) {
+      e = e || window.event;
+      // console.log(e)
+      xyE.x = e.clientX 
+      xyE.y = e.clientY
+      return xyE;
+      // original version only cared for the X 
+      // xE = e.clientX - xCirculo;
+      // return xE;
+    }
+    function slideRad(xyE) { //orginal got xE
+      rRadio = parseInt(document.getElementById("daC").getAttribute("r"))
+      xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+      yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+
+      xD = Math.sqrt( Math.pow(Math.abs(xyE.x - xCirculo),2) + Math.pow(Math.abs(xyE.y - yCirculo),2))
+
+      // xD = (xE - xI)
+      // dRadio = xD + rRadio;
+      // console.log(xD)
+      // console.log(rRadio)
+      // if(dRadio < xCenter && dRadio > 30 && clicked==0){
+      //   // console.log(xD)
+      //  // xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))  
+      if (xD > 0 ){
+      rRadio = xD;
+      // xRadio =  xCirculo + rRadio - 3;
+      //   //console.log(rRadio)
+      //   // var xText = xD  - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
+       
+        
+        
+        
+        document.getElementById("daC").setAttributeNS(null,'r',rRadio) 
+        document.getElementById("daRing").setAttributeNS(null, 'r', rRadio);
+        
+        xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+        yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+        xRadio = xCirculo + rRadio - 3
+        var yText = yCirculo - rRadio - 10;
+        //console.log(yText)
+        document.getElementById("daRadio").setAttributeNS(null, 'r', rRadio)
+        // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
+        document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
+       
+
+        //annoying safari method
+        document.getElementById("container").append(document.getElementById('map1937'))
+
+        } 
+
+        // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
+
+        // cuando llega al limite se prende una variable elLimite = 1 
+        // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
+
+      //console.log(xyD)   
+    }
+
+
+
+    </script>
+</body>
+</html>
