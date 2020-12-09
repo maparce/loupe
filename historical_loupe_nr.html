@@ -217,7 +217,7 @@
     function slide(xyE) {
       xyD = {x: ((xyE.x - xyI.x) + circLoc.x) , y: ((xyE.y-xyI.y) + circLoc.y)}
       
-      if(xyD.x < daFrame.e && xyD.y < daFrame.s && xyD.x > daFrame.w && xyD.y > daFrame.n & clickedRad==0){
+      // if(xyD.x < daFrame.e && xyD.y < daFrame.s && xyD.x > daFrame.w && xyD.y > daFrame.n & clickedRad==0){
         document.getElementById("daC").setAttributeNS(null,'cx',xyD.x)
         document.getElementById("daC").setAttributeNS(null,'cy',xyD.y) 
         document.getElementById("daRing").setAttributeNS(null, 'cx', xyD.x);
@@ -237,14 +237,14 @@
         //annoying safari method
         document.getElementById("container").append(document.getElementById('map1937'))
 
-        } 
+        // } 
 
-        // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
+        // // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
 
-        else if (xyD.x > daFrame.e) {map1937.panBy([10, 0])} 
-        else if (xyD.x < daFrame.w) {map1937.panBy([-10, 0])}
-        else if (xyD.y > daFrame.s) {map1937.panBy([0, 10])}
-        else if (xyD.y < daFrame.n) {map1937.panBy([0, -10])}
+        // else if (xyD.x > daFrame.e) {map1937.panBy([10, 0])} 
+        // else if (xyD.x < daFrame.w) {map1937.panBy([-10, 0])}
+        // else if (xyD.y > daFrame.s) {map1937.panBy([0, 10])}
+        // else if (xyD.y < daFrame.n) {map1937.panBy([0, -10])}
 
         // cuando llega al limite se prende una variable elLimite = 1 
         // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
