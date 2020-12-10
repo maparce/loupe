@@ -87,7 +87,7 @@
     <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
     <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" >
       <circle id="daRing" cx="250" cy="250" r="100" style="stroke:#000; fill-opacity:0; stroke-opacity:0.5;stroke-width:2%; cursor: move; pointer-events: fill"/>
-      <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0;stroke-width:2.5%;"/>
+      <!-- <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0;stroke-width:2.5%;"/> -->
       <!-- <text x="341" y="255" stroke="#ff0"> 37</text> -->
       </svg>
     <!-- <div id="mapBlank"> -->
@@ -135,8 +135,8 @@
       document.getElementById("daSVG").setAttributeNS(null, "viewBox", "0 0 " + daWidth + " " + daHeight);
       document.getElementById("daRing").setAttributeNS(null, 'cx', xCenter);
       document.getElementById("daRing").setAttributeNS(null, 'cy', yCenter);
-      document.getElementById("daRadio").setAttributeNS(null, 'cx', xCenter);
-      document.getElementById("daRadio").setAttributeNS(null, 'cy', yCenter);
+      // document.getElementById("daRadio").setAttributeNS(null, 'cx', xCenter);
+      // document.getElementById("daRadio").setAttributeNS(null, 'cy', yCenter);
       // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xCenter);
       // document.getElementById("daRadioC").setAttributeNS(null, 'cy', yCenter);
       
@@ -226,8 +226,8 @@
         var xText = xyD.x  - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
         var yText = xyD.y - rRadio - 10;
 
-        document.getElementById("daRadio").setAttributeNS(null, 'cx', xyD.x);
-        document.getElementById("daRadio").setAttributeNS(null, 'cy', xyD.y);
+        // document.getElementById("daRadio").setAttributeNS(null, 'cx', xyD.x);
+        // document.getElementById("daRadio").setAttributeNS(null, 'cy', xyD.y);
         
         // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
         // document.getElementById("daRadioC").setAttributeNS(null, 'cy', xyD.y);
@@ -237,9 +237,9 @@
         //annoying safari method
         document.getElementById("container").append(document.getElementById('map1937'))
 
-        // } 
+        } 
 
-        // // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
+        // TO DO Make the value of displacement of the pixel be function based to the distance of the mouse from the center of the circle to the edge of the circle. 
 
         // else if (xyD.x > daFrame.e) {map1937.panBy([10, 0])} 
         // else if (xyD.x < daFrame.w) {map1937.panBy([-10, 0])}
@@ -250,11 +250,11 @@
         // esta entonce de va la funcion slideReady y aqui entoces ocurren el movimiento
 
       //console.log(xyD)   
-    }
+    // }
   
 
     ///##########################################
-    var daRadioButton = document.getElementById("daRadio");
+    // var daRadioButton = document.getElementById("daRadio");
     // var daDiv = map1937.getPane("tilePane").children[1]
     // daRadioButton.addEventListener("mousedown",slideReadyRad)
     // window.addEventListener("mouseup", slideFinishRad);
@@ -336,7 +336,7 @@
         xRadio = xCirculo + rRadio - 3
         var yText = yCirculo - rRadio - 10;
         //console.log(yText)
-        document.getElementById("daRadio").setAttributeNS(null, 'r', rRadio)
+        // document.getElementById("daRadio").setAttributeNS(null, 'r', rRadio)
         // document.getElementById("daRadioC").setAttributeNS(null, 'cx', xRadio);
         document.getElementById("daTextC").setAttributeNS(null, 'y', yText);
        
