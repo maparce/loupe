@@ -85,7 +85,8 @@
     <div id="map1937" class="clip-circle"></div>
     <div id="map2009"></div>
     <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
-    <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" >
+    <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" style="-webkit-user-select: none;
+    -moz-user-select: none;-ms-user-select: none; user-select: none;">
       <circle id="daRing" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0.5;stroke-width:2%; pointer-events:fill; cursor: move;"
       onmousedown="onMouseDown(evt)"
       onmousemove="onMouseMove(evt)"
