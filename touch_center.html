@@ -69,7 +69,8 @@
     <circle cx="100" onclick="alert('hola')" cy="100" r="50" style="stroke:#000; fill-opacity:0.05">
   </svg> -->
 
-  <svg viewBox="0 0 0 0" width="1" height="1">
+  <svg viewBox="0 0 0 0" width="1" height="1" style="-webkit-user-select: none;
+  -moz-user-select: none;-ms-user-select: none; user-select: none;">
     <defs>
       <clipPath id="maskhair">
         <circle id= "daC" cx="100" cy="100" r="100" style="cursor: move"/>
@@ -87,7 +88,7 @@
     <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
     <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" style="-webkit-user-select: none;
     -moz-user-select: none;-ms-user-select: none; user-select: none;">
-      <circle id="daRing" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0.5;stroke-width:2%; pointer-events:fill; cursor: move;"
+      <circle id="daRing" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0; pointer-events:fill; cursor: move;"
       onmousedown="onMouseDown(evt)"
       onmousemove="onMouseMove(evt)"
       onmouseup="onMouseUp(evt)"
@@ -98,7 +99,7 @@
   
       />
       
-      <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0;stroke-width:2.5%;"
+      <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0.5;stroke-width:5%;"
       onmousedown="onMouseDownR(evt)"
       onmousemove="onMouseMoveR(evt)"
       onmouseup="onMouseUpR(evt)"      
