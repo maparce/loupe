@@ -154,6 +154,7 @@
         var xRadio = xCenter + rRadio - 3
         var xText = xCenter - parseInt(document.getElementById("daTextC").style.getPropertyValue("font-size"));
         var yText = yCenter - rRadio - 10;
+
       // MAKE THE DISK SVG HAVE THE WIDTH AND HEIGHT OF THE BOUNDING CLIENT 
       document.getElementById("daSVG").setAttributeNS(null, "viewBox", "0 0 " + daWidth + " " + daHeight);
       document.getElementById("daRing").setAttributeNS(null, 'cx', xCenter);
@@ -171,6 +172,9 @@
       document.getElementById("daY").setAttribute("value",yCenter) 
       document.getElementById("daX").setAttribute("max",xCenter*2)     
       document.getElementById("daY").setAttribute("max",yCenter*2)  
+
+      var xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+      var yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
 
     var moveSlider = function(slider, direction) {
             var value = slider.value;
@@ -317,8 +321,8 @@ function getMouseR(evt){
      function doUpdateR(){
         
       rRadio = parseInt(document.getElementById("daC").getAttribute("r"))
-      xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
-      yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
+      // xCirculo = parseInt(document.getElementById("daC").getAttribute("cx"))
+      // yCirculo = parseInt(document.getElementById("daC").getAttribute("cy"))
       xD = Math.sqrt( Math.pow(Math.abs(newP.x - xCirculo),2) + Math.pow(Math.abs(newP.y - yCirculo),2))
 
       if (xD > 0 ){
