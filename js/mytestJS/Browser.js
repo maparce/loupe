@@ -1,5 +1,5 @@
-import * as Util from './Util';
-// import {svgCreate} from './SVG.Util';
+import * as Util from './Util.js';
+import {svgCreate} from './SVG.Util.js';
 
 /*
  * @namespace Browser
