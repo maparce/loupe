@@ -134,4 +134,5 @@ function userAgentContains(str) {
 	return navigator.userAgent.toLowerCase().indexOf(str) >= 0;
 }
 
+
 // console.log(daTest)

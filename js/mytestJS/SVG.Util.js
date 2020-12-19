@@ -1,4 +1,4 @@
-import * as Browser from '../../core/Browser';
+import * as Browser from './Browser.js';
 
 // @namespace SVG; @section
 // There are several static functions which can be called without instantiating L.SVG:
