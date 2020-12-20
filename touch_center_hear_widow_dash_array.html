@@ -54,6 +54,97 @@
           -webkit-clip-path: url(#maskhair);  
           cursor: move;
           }
+        
+        .daAnim {
+        /* stroke-dasharray: 4; */
+        stroke-width:2%;
+        animation: dash 1s linear;  
+        animation-iteration-count: 4;
+        animation-direction: alternate;
+        }
+        
+
+        @keyframes dash {
+        to {
+        stroke-width: 7%;
+        }
+        }
+
+        .arrow {
+        /* stroke-dasharray: 4; */
+        fill:#FFF;
+        stroke: #000;
+        stroke-width: .5%;
+        /* stroke-width: .50%; */
+        fill-opacity: 1;
+        animation-name: opaArrow;
+        animation-duration: 1s;
+        animation-delay: 2s;  
+        /* animation-iteration-count: 1; */
+        animation-direction:reverse;
+        animation-timing-function: linear;
+        /* animation: none; */
+        }
+
+        .arrow:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .arrow:nth-child(2) {
+            animation-delay: .5s;
+        }
+        .arrow:nth-child(3) {
+            animation-delay: 1s;
+        }
+        .arrow:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes opaArrow {
+          from {
+            opacity:0;
+            stroke-width: 0%;
+        }
+        to {
+        opacity:1;
+        stroke-width: .1%;
+        }
+        }
+
+        .daArrowCircle{
+          fill-opacity:.5;
+          animation-name: cirArrowAni;
+          animation-duration: 2s;
+          animation-timing-function: linear;
+
+        }
+
+        @keyframes cirArrowAni {
+          from {
+            fill-opacity:0;
+        }
+        to {
+          fill-opacity:.5;
+        }
+        }
+
+        #daCenterSVG{
+          opacity:0;
+          animation-name: cirCenterAni;
+          animation-duration: 4.5s;
+          animation-timing-function: linear;
+        }
+
+        @keyframes cirCenterAni {
+          from {
+            opacity:1;
+        }
+        90%{
+          opacity:1
+        }
+        to {
+          opacity:0;
+        }
+        }
 
           /* #daSVG{
               display: block;
@@ -79,8 +170,7 @@
       </clipPath>
     </defs>
   </svg>
-
-
+ 
   
     <div id="container">    
     <div id="map1937" class="clip-circle"></div>
@@ -88,7 +178,8 @@
     <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
     <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" style="-webkit-user-select: none;
     -moz-user-select: none;-ms-user-select: none; user-select: none;">
-      <circle id="daRing" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0; pointer-events:fill; cursor: move;"
+      <g id="daCenterSVG">
+      <circle id="daRing" class="daArrowCircle" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0; pointer-events:fill; cursor: move;"
       onmousedown="onMouseDown(evt)"
       onmousemove="onMouseMove(evt)"
       onmouseup="onMouseUp(evt)"
@@ -96,10 +187,14 @@
       ontouchmove = "onMouseMove(evt)"
       ontouchend = "onMouseUp(evt)" 
       ontouchcancel= "onMouseUp(evt)"
-  
       />
+      <path id="daArrow_N" class="arrow" d="M 250 235 L253.5 241.06217782649108 L246.5 241.06217782649108 Z" fill="#000"></path>
+      <path id="daArrow_E" class="arrow" d="M 265 250 L258.93782217350895 253.5 L258.93782217350895 246.5 Z" fill="#000"></path>
+      <path id="daArrow_S" class="arrow" d="M 250 265 L246.5 258.93782217350895 L253.5 258.93782217350895 Z" fill="#000"></path>
+      <path id="daArrow_W" class="arrow" d="M 235 250 L241.06217782649108 246.5 L241.06217782649108 253.5 Z" fill="#000"></path>
+      </g>
       
-      <circle id="daRadio" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0.5;stroke-width:5%;"
+      <circle id="daRadio" class="daAnim" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0.5;"
       onmousedown="onMouseDownR(evt)"
       onmousemove="onMouseMoveR(evt)"
       onmouseup="onMouseUpR(evt)"      
@@ -109,6 +204,7 @@
       ontouchcancel= "onMouseUpR(evt)" 
       />
 
+      
       <!-- onmouseleave="onMouseUpR(evt)" -->
 
       <!-- <text x="341" y="255" stroke="#ff0"> 37</text> -->
@@ -203,7 +299,10 @@
      var newP = svgRoot.createSVGPoint();
      var bmousedown=0;
      var myCirc = document.getElementById("daRing");
-     
+    
+     window.addEventListener("mouseup", onMouseUp);
+     window.addEventListener("mouseup", onMouseUpR);
+
      function getMouse(evt){
         var position = svgRoot.createSVGPoint();
 
@@ -215,8 +314,10 @@
      function onMouseDown(evt){
         // console.log(evt)
         // evt.preventDefault()
+        window.addEventListener("mousemove", onMouseMove);
+        console.log("down centro")
         map1937.dragging.disable() 
-        document.getElementById("daRadio").style.pointerEvents = "none"
+        document.getElementById("daRadio").style.pointerEvents = "none";
 
         if (evt.touches){
             bmousedown=1
@@ -232,7 +333,8 @@
      }
      function onMouseMove(evt){
         // evt.preventDefault()
-        if(bmousedown == 0) return false; 
+        console.log("move centro")
+        if(bmousedown != 1) return false; 
         map1937.dragging.disable() 
         document.getElementById("daRadio").style.pointerEvents = "none"
 
@@ -247,7 +349,7 @@
      function onMouseUp(evt){
       map1937.dragging.enable()
       document.getElementById("daRadio").style.pointerEvents = "stroke"
- 
+      console.log("mouse up centro")
         bmousedown=0;
         }
      
@@ -279,10 +381,10 @@ function getMouseR(evt){
         }
      
      function onMouseDownR(evt){
+        window.addEventListener("mousemove", onMouseMoveR);
         evt.preventDefault()
         map1937.dragging.disable() 
-        document.getElementById("daRing").style.pointerEvents = "none"
-
+        document.getElementById("daRing").style.pointerEvents = "none";
 
         if (evt.touches){
           
@@ -297,14 +399,14 @@ function getMouseR(evt){
         newP=getMouseR(evt);
         doUpdateR();
         console.log("mouseDown Da Radio")
-        console.log(evt)
+        // console.log(evt)
         }
      }
      function onMouseMoveR(evt){
         if(bmousedown != 2) return false; 
-        // evt.preventDefault()
+        evt.preventDefault()
         map1937.dragging.disable() 
-        // document.getElementById("daRing").style.pointerEvents = "none"
+        document.getElementById("daRing").style.pointerEvents = "none"
             // console.log(evt)
             if(evt.touches)
             {newP=getMouseR(evt.touches[0])
@@ -312,8 +414,8 @@ function getMouseR(evt){
             console.log("touch move")}
             else{newP=getMouseR(evt);
             doUpdateR()
-            console.log("mouse move Da RING")
-            console.log(evt)
+            console.log("mouse move Da radio")
+            // console.log(evt)
 
             };
         }
@@ -321,7 +423,7 @@ function getMouseR(evt){
      function onMouseUpR(evt){
       bmousedown=0;
       document.getElementById("daRing").style.pointerEvents = "fill";
-      console.log("mouse UP Da RING")
+      console.log("mouse UP Da radio")
       map1937.dragging.enable() 
         }
      
