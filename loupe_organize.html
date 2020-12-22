@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my first leaflet map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+   <link rel="stylesheet" href="./css/loupe.css"/>
+
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <script src ="./js/L.Map.Sync.js"></script>
+   <script src ="./js/xy_move_SVG_center.js"></script>
+   <script src ="./js/radio_move_SVG.js"></script>
+   
+   <style>
+        div{
+        color: #fff;
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        
+        /* padding: 5px; */
+        }
+
+        #container {
+          width: 500px;
+          height: 500px;
+          position: absolute;
+          background-color:#000;
+          
+        }
+        #map1937,
+        #map2009 {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 11;
+        }
+        #map2009 {
+          z-index: 10;
+        }
+
+    </style>
+</head>
+
+<body>
+  <!-- <p id="fTest1" style="font-size: 50px;">TEST
+    <p id="fTest2" style="font-size: 50px;">TEST
+      <p id="fTest3" style="font-size: 50px;">TEST</p>
+    </p>
+    </p> -->
+  
+  <div id="container">    
+    <div id="map1937" class="clip-circle"></div>
+    <div id="map2009">
+      
+      
+    </div>
+    <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
+    <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" style="-webkit-user-select: none;
+    -moz-user-select: none;-ms-user-select: none; user-select: none;">
+    
+      <clipPath id="maskhair">
+        <circle id= "daC" cx="100" cy="100" r="100" style="cursor: move"/>
+        <text id="daTextC" x="230" y="140" style="fill:#fff; stroke:rgb(136, 57, 43); stroke-width:2; font-size: 20px;"></text> 
+      </clipPath>
+      <g id="daCenterSVG">
+      <circle id="daRing" class="daArrowCircle iAni" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.5; stroke-opacity:0; pointer-events:fill; cursor: move;"
+      onmousedown="onMouseDown(evt)"
+      onmousemove="onMouseMove(evt)"
+      onmouseup="onMouseUp(evt)"
+      ontouchstart= "onMouseDown(evt)" 
+      ontouchmove = "onMouseMove(evt)"
+      ontouchend = "onMouseUp(evt)" 
+      ontouchcancel= "onMouseUp(evt)"
+      />
+      <path id="daArrow_N" class="arrow iAni" d="M 250 235 L253.5 241.06217782649108 L246.5 241.06217782649108 Z" fill="#000"></path>
+      <path id="daArrow_S" class="arrow iAni" d="M 250 265 L246.5 258.93782217350895 L253.5 258.93782217350895 Z" fill="#000"></path>
+      <path id="daArrow_E" class="arrow iAni" d="M 265 250 L258.93782217350895 253.5 L258.93782217350895 246.5 Z" fill="#000"></path>
+      <path id="daArrow_W" class="arrow iAni" d="M 235 250 L241.06217782649108 246.5 L241.06217782649108 253.5 Z" fill="#000"></path>
+      </g>
+      
+      <circle id="daRadio" class="daAnim" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0.5;"
+      onmousedown="onMouseDownR(evt)"
+      onmousemove="onMouseMoveR(evt)"
+      onmouseup="onMouseUpR(evt)"      
+      ontouchstart= "onMouseDownR(evt)" 
+      ontouchmove = "onMouseMoveR(evt)"
+      ontouchend = "onMouseUpR(evt)" 
+      ontouchcancel= "onMouseUpR(evt)" 
+      />
+      </svg>
+    </div>
+    
+<script>
+        var daZoom = 17;
+        var daCenter = [18.144475406614973, -65.30060941442248,];
+        var map1937 = L.map('map1937', { zoomControl: false , attributionControl: false,}).setView(daCenter, daZoom);
+        var map2009 = L.map('map2009', { zoomControl: false, attributionControl: false, }).setView(daCenter, daZoom);
+        L.tileLayer('https://cartocollective.blob.core.windows.net/vieques/v2009/{z}/{x}/{y}.png', {} ).addTo(map2009)
+        L.tileLayer('https://cartocollective.blob.core.windows.net/vieques/v1937/{z}/{x}/{y}.png', {} ).addTo(map1937);
+
+        map1937.sync(map2009)
+        map2009.sync(map1937)
+        document.getElementsByClassName("leaflet-control-container")[0].append(document.getElementById("daSVG"))
+        document.getElementById("daSVG").style.zIndex = 999
+      
+        var svgRoot = document.getElementById("daSVG");
+        var newP = svgRoot.createSVGPoint();
+        var myCirc = document.getElementById("daRing");
+        // var offsetY = document.getElementById("container").offsetTop
+        // var offsetX= document.getElementById("container").offsetLeft
+        // this would get me the relative position to the top of the scrren after scrolling
+        // document.getElementById("map1937").getBoundingClientRect()
+
+    </script>
+    <script src ="./js/SVG_coordinates.js"></script>
+    <script>
+      document.getElementById("container").append(document.getElementById('map1937'))
+      // TODO 
+      // Take out the animation of the center on click 
+      // animate on hover and tocuh 
+      // fix the viewBox to be a variable 
+      // make the map1937 in the functions, part of a functions
+
+      // 
+      // make the clip change by viewbox 
+      setTimeout(function(){animationApagao(); radioAnimationOff()},4000);
+      
+      
+      function animationApagao(){
+        daArrows = document.getElementsByClassName("iAni")
+        for (i = 0; i < daArrows.length; i++) {
+          daArrows[i].style.animation = "none" ;
+              } 
+        document.getElementById("daCenterSVG").style.animationDuration = ".5s"
+        document.getElementById("daCenterSVG").style.animation = "none"
+
+      }
+
+    
+    </script>
+</body>
+</html>
