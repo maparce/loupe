@@ -46,7 +46,8 @@ function getMouseR(evt){
     }
  
  function onMouseUpR(evt){
-     if(bmousedown==2) {radioAnimationOn()}
+     if(bmousedown==2) {radioAnimationOn();     document.getElementById("daCenterSVG").style.animation  = "cirCenterAni 1s linear"
+    }
      else {
         console.log(bmousedown)
   bmousedown=0;
