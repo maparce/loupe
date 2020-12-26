@@ -11,6 +11,7 @@ function getMouseR(evt){
     }
  
  function onMouseDownR(evt){
+    document.getElementById("daCenterSVG").style.animation  = "none";
     radioStrikeOn()
     console.log("boder click")
     window.addEventListener("mousemove", onMouseMoveR);
@@ -46,8 +47,10 @@ function getMouseR(evt){
     }
  
  function onMouseUpR(evt){
-     if(bmousedown==2) {radioAnimationOn();     document.getElementById("daCenterSVG").style.animation  = "cirCenterAni 1s linear"
+     if(bmousedown==2) {radioAnimationOn();
+        document.getElementById("daCenterSVG").style.animation  = "none";
     }
+     
      else {
         console.log(bmousedown)
   bmousedown=0;

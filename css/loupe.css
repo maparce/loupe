@@ -2,7 +2,8 @@
 .clip-circle {
     clip-path: url(#maskhair);       
     -webkit-clip-path: url(#maskhair);  
-    cursor: move;}
+    /* cursor: grab; */
+}
     
 .daAnim {
 /* stroke-dasharray: 4; */
@@ -84,4 +85,10 @@ to {
 to {
   opacity:0;
 }
+}
+
+@keyframes cirCenterAni2 {
+    from {opacity: 1;}
+    25%{opacity: 1;}
+    to {opacity:0;}
 }

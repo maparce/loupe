@@ -13,7 +13,8 @@ function getMouse(evt){
  
  function onMouseDown(evt){
     radioAnimationOff();
-    document.getElementById("daCenterSVG").style.animation  = "cirCenterAni 1s linear"
+    console.log("mouse down on center")
+    document.getElementById("daCenterSVG").style.animation  = "cirCenterAni2 .5s linear"
     window.addEventListener("mousemove", onMouseMove);
     offset = document.getElementById("map1937").getBoundingClientRect()
     map1937.dragging.disable() // WORK ON THIS

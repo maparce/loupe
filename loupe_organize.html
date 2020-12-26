@@ -64,10 +64,10 @@
     </div>
     <!-- Now that I am adding additional elements to the SVG maybe I should control it by the viewBox and not by each element within -->
     <svg id="daSVG" class="leaflet-control"  viewBox="0 0 0 0" style="-webkit-user-select: none;
-    -moz-user-select: none;-ms-user-select: none; user-select: none;">
+    -moz-user-select: none;-ms-user-select: none; user-select: none; pointer-events: none;">
     
       <clipPath id="maskhair">
-        <circle id= "daC" cx="100" cy="100" r="100" style="cursor: move"/>
+        <circle id= "daC" cx="100" cy="100" r="100"/>
         <text id="daTextC" x="230" y="140" style="fill:#fff; stroke:rgb(136, 57, 43); stroke-width:2; font-size: 20px;"></text> 
       </clipPath>
       <g id="daCenterSVG">
@@ -86,7 +86,7 @@
       <path id="daArrow_W" class="arrow iAni" d="M 235 250 L241.06217782649108 246.5 L241.06217782649108 253.5 Z" fill="#000"></path>
       </g>
       
-      <circle id="daRadio" class="daAnim" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; pointer-events:stroke; stroke-opacity:0.5;"
+      <circle id="daRadio" class="daAnim" cx="250" cy="250" r="100" style=" stroke:#000; fill-opacity:0; stroke-opacity:0.5; cursor: pointer;"
       onmousedown="onMouseDownR(evt)"
       onmousemove="onMouseMoveR(evt)"
       onmouseup="onMouseUpR(evt)"      
@@ -123,14 +123,7 @@
     <script src ="./js/SVG_coordinates.js"></script>
     <script>
       document.getElementById("container").append(document.getElementById('map1937'))
-      // TODO 
-      // Take out the animation of the center on click 
-      // animate on hover and tocuh 
-      // fix the viewBox to be a variable 
-      // make the map1937 in the functions, part of a functions
 
-      // 
-      // make the clip change by viewbox 
       setTimeout(function(){animationApagao(); radioAnimationOff()},4000);
       
       
@@ -143,7 +136,13 @@
         document.getElementById("daCenterSVG").style.animation = "none"
 
       }
-
+      // TODO 
+      // animate on hover and tocuh 
+      // fix the viewBox to be a variable 
+      // make the map1937 in the functions, part of a functions
+      // fix cursor so it does not interact witht the fill, or else that the fill is a hand
+      // set the bounding box limits of the center cursor
+      // make the clip change by viewbox 
     
     </script>
 </body>
