@@ -50,7 +50,7 @@
           clip-path: inset(0 50% 0 0);;
         }
 
-        #daLine {
+        #daLineAni {
           stroke: rgb(30, 30, 30);
           stroke-width: 3%;
           opacity: 0;
@@ -66,24 +66,14 @@
 
 @keyframes aniLine {
 from {
-    opacity:0;
-    stroke-width: 3%;
-}
-1%{
     opacity:1;
     stroke-width: 0%;
-}
-99% {
-opacity:1;
-stroke-width: 3%;
 }
 
 to {
   opacity:1;
   stroke-width: 3%;
-
 }
-
 }
 
     </style>
@@ -96,7 +86,8 @@ to {
     -moz-user-select: none;-ms-user-select: none; user-select: none; pointer-events: none;">
     <!-- very important to have the none in the pointers if you want the Div to interact in background while the SVG are in the front -->
     <!-- <circle id="daRing" class="daArrowCircle iAni" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.2; stroke-opacity:1; pointer-events:fill; cursor: move;"></circle> -->
-    <line id="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000;"></line>
+    <line id="daLineBack" class="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000; opacity:0"></line>
+    <line id="daLineAni" class="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000;"></line>
     <!-- <line id="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000;"></line> -->
   
   </svg> 
@@ -126,9 +117,9 @@ to {
         //   leafy[i].append(document.getElementById("daSVG"))
         // }
     </script>
-    <script src="./js/xy_move_SVG_center_rectangle.js"></script>
+    <script src="./js/xy_move_SVG_rectangle.js"></script>
     <script>
-      addPointer("daLine")
+      addPointer("daLineBack")
     </script>
 </body>
 </html>
