@@ -106,10 +106,10 @@ function getMouse(evt){
     }
  
  function onMouseUp(evt){
-    if(bmousedown==2) {radioAnimationOn()} {
+   
   map1937.dragging.enable() // WORK ON THIS
     bmousedown=0;
-    }}
+    }
  
  function doUpdate(){
    

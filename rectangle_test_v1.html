@@ -55,19 +55,17 @@
           stroke-width: 3%;
           opacity: 0;
           animation: aniLine .75s linear;
-
-/* animation-name: aniLine; */
-/* animation-duration: 1s; */
-/* animation-delay: 2s;   */
-/* animation-iteration-count: 1; */
-/* animation-direction:reverse; */
-/* animation-timing-function: linear; */
 }
 
 @keyframes aniLine {
 from {
     opacity:1;
     stroke-width: 0%;
+}
+10% {  
+  opacity:1;
+  stroke-width: 0%;
+  /* added the 10% para que no se vea la animacion cuando se esta haciendo el drag */
 }
 
 to {
@@ -84,20 +82,14 @@ to {
   <div id="container">    
     <svg id="daSVG" height="500" width="500" style="-webkit-user-select: none;
     -moz-user-select: none;-ms-user-select: none; user-select: none; pointer-events: none;">
-    <!-- very important to have the none in the pointers if you want the Div to interact in background while the SVG are in the front -->
-    <!-- <circle id="daRing" class="daArrowCircle iAni" cx="250" cy="250" r="20" style="stroke:#000; fill-opacity:.2; stroke-opacity:1; pointer-events:fill; cursor: move;"></circle> -->
     <line id="daLineBack" class="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000; opacity:0"></line>
     <line id="daLineAni" class="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000;"></line>
-    <!-- <line id="daLine" x1="250" y1="0" x2="250" y2="500" style="stroke:#000;"></line> -->
   
   </svg> 
   <div id="map1937" class="clipy" ></div>
   <div id="map2009"> </div>
   </div>
-  
-  <!-- <svg xmlns="http://www.w3.org/2000/svg" id="daSVG2" height="500" width="500">
-    <line id="daLine2" x1="250" y1="0" x2="250" y2="500" style="stroke:rgb(255,0,0);stroke-width:10"/>
-  </svg> -->
+
 
 <script>
         var daZoom = 17;
@@ -112,10 +104,6 @@ to {
         document.getElementById("daSVG").style.zIndex = 999
         var svgRoot = document.getElementById("daSVG");
         var newP = svgRoot.createSVGPoint();
-        //var leafy = document.getElementsByClassName("leaflet-control-container")
-        // for (i = 0; i < leafy.length; i++) {
-        //   leafy[i].append(document.getElementById("daSVG"))
-        // }
     </script>
     <script src="./js/xy_move_SVG_rectangle.js"></script>
     <script>
