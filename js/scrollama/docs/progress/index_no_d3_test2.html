@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Progress Example</title>
+    <meta name="description" content="Scrollama: Progress Example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      #scrolly {
+        position: relative;
+      }
+
+      article {
+        position: relative;
+        padding: 0 1rem;
+        margin: 0 auto;
+        width: 33%;
+      }
+
+      .step {
+        margin: 2rem auto 4rem auto;
+        padding: 1rem;
+        border: 2px solid #f3f3f3;
+      }
+
+      .step p {
+        text-align: center;
+        margin: 0.5rem auto;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <section id="intro">
+        <h1 class="intro__hed">Progress Example NOT USING D3</h1>
+        <p class="intro__dek">
+          Start scrolling to see how it works.
+        </p>
+      </section>
+      <section id="scrolly">
+        <article>
+          <div class="step" data-step="218,165,32">
+            <p>STEP 1</p>
+            <p class="progress">0%</p>
+          </div>
+          <div class="step" data-step="0,128,128">
+            <p>STEP 2</p>
+            <p class="progress">0%</p>
+          </div>
+        </article>
+      </section>
+      <section id="outro"></section>
+    </main>
+
+    <!-- <script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script> -->
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="../scrollama.min.js"></script>
+    <script>
+      // using d3 for convenience
+      var scrolly = document.querySelector("#scrolly");
+      var article = scrolly.querySelector("article");
+      var step = article.querySelectorAll(".step");
+
+      // initialize the scrollama
+      var scroller = scrollama();
+
+      function handleStepProgress(response) {
+        console.log(response);
+        // console.log(response.progress);
+
+        var el = response.element;
+
+        var val = el.getAttributeNS(null,"data-step");
+        var rgba = "rgba(" + val + ", " + response.progress + ")";
+        console.log(rgba)
+        el.style.backgroundColor = rgba;
+        el.innerText = response.progress*100 + " %";
+      }
+
+      function resize() {
+        var min = window.innerHeight * 0.5;
+        var h = min + Math.random() * window.innerHeight * 0.25;
+        // Este es un metodo util para mantener el tamaho de las columnas proporcional
+        for (i = 0; i < step.length; i++) {step[i].style.height = (Math.floor(h) + "px");}
+        scroller.resize();
+      }
+
+      function init() {
+        // 1. setup the scroller with the bare-bones settings
+        // this will also initialize trigger observations
+        // 3. bind scrollama event handlers (this can be chained like below)
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: .25,
+            progress: true,
+            debug: true
+          })
+          .onStepProgress(handleStepProgress);
+
+        // setup resize event
+        resize();
+        window.addEventListener("resize", resize);
+      }
+
+      // kick things off
+      init();
+    </script>
+  </body>
+</html>
