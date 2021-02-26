@@ -69,7 +69,8 @@ to {
   fill-opacity:.5;
 }
 }
-#daCenterSVG{
+.daCenterSVG{ 
+  /* before it was an ID */
   opacity:0;
   animation-name: cirCenterAni;
   animation-duration: 4.5s;
