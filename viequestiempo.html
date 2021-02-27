@@ -287,6 +287,9 @@ crossorigin=""></script>
     const Vieques2020 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {} ).addTo(map).setOpacity(0);
     const ViequesOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {} ).addTo(map).setOpacity(0)
     cccNorth("map")
+    mapArray = [Vieques1854,Vieques1883,Vieques1937,Vieques1977,Vieques1983,Vieques2009, Vieques2020, ViequesOSM]
+    mapArrayName = ["Vieques1854","Vieques1883","Vieques1937","Vieques1977","Vieques1983","Vieques2009", "Vieques2020", "ViequesOSM"]
+
 </script>
 <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
 <script src="./js/scrollama/docs/scrollama.min.js"></script>
@@ -296,14 +299,16 @@ crossorigin=""></script>
     var step = scrolly.querySelectorAll(".container");
     var scroller = scrollama();
 
-var correntTile = ViequesOSM;
+// var x = null;
 function handleStepProgress(response) {
-  daResponse = response.element.getElementsByTagName("h2")[0].innerHTML
-  console.log(daResponse);
+  daResponse = parseInt(response.element.getAttribute("data-scrollama-index"))//response.element.getElementsByTagName("h2")[0].innerHTML
+  // x = response
+  // console.log(response.element);
+  // console.log(daResponse);
 
-  if (daResponse != "Introduction"){ 
-    eval(daResponse).addTo(map).setOpacity(response.progress)
-    if (daResponse != "t1937" & response.progress < .5){
+  if (daResponse != 0){ 
+    mapArray[daResponse].setOpacity(response.progress)
+    if (daResponse != 1 & response.progress < .5){
     map.dragging.enable()
     map.scrollWheelZoom.enable()}
   
@@ -311,7 +316,7 @@ function handleStepProgress(response) {
   // document.getElementById(daResponse).style.zIndex = 4
   // document.getElementById("elTest").innerText = response.element.getElementsByTagName("h2")[0].innerText      
           console.log(response.progress);
-    if (daResponse == "Introduction" ) {
+    if (daResponse == 0 ) {
       map.dragging.disable()
       map.scrollWheelZoom.disable()}
 //     var el = response.element;
