@@ -301,14 +301,15 @@ crossorigin=""></script>
 
 // var x = null;
 function handleStepProgress(response) {
-  daResponse = parseInt(response.element.getAttribute("data-scrollama-index"))//response.element.getElementsByTagName("h2")[0].innerHTML
+  daResponse = -1 + parseInt(response.element.getAttribute("data-scrollama-index"))//response.element.getElementsByTagName("h2")[0].innerHTML
   // x = response
   // console.log(response.element);
-  // console.log(daResponse);
+  console.log(daResponse);
+  console.log(response.progress)
 
-  if (daResponse != 0){ 
+  if (daResponse >= 0){ 
     mapArray[daResponse].setOpacity(response.progress)
-    if (daResponse != 1 & response.progress < .5){
+    if (daResponse >= 0 & response.progress > .75){
     map.dragging.enable()
     map.scrollWheelZoom.enable()}
   
@@ -316,7 +317,7 @@ function handleStepProgress(response) {
   // document.getElementById(daResponse).style.zIndex = 4
   // document.getElementById("elTest").innerText = response.element.getElementsByTagName("h2")[0].innerText      
           console.log(response.progress);
-    if (daResponse == 0 ) {
+    if (daResponse == -1 ) {
       map.dragging.disable()
       map.scrollWheelZoom.disable()}
 //     var el = response.element;
@@ -355,6 +356,8 @@ function handleStepProgress(response) {
         // setup resize event
         resize();
         window.addEventListener("resize", resize);
+        map.dragging.disable()
+        map.scrollWheelZoom.disable()
       }
 
       // kick things off
